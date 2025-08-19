@@ -166,6 +166,10 @@ def sketch_to_image():
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/features/A:\DATASET\archive\fashion-dataset\images')
+def serve_feature_image(filename):
+    return send_from_directory('feature', filename)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
