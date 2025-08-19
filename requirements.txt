@@ -1,0 +1,8 @@
+flask
+flask-cors
+python-dotenv
+tensorflow
+faiss-cpu
+requests
+numpy
+opencv-python

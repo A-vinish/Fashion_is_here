@@ -1,0 +1,14 @@
+Step 1: User Flow
+User opens the application
+User navigates to the Upload section
+Users upload an image/sketch.
+Backend validates the uploaded file (REQ-5).
+User initiates feature extraction
+System processes image to extract visual features using AI (REQ-2).
+System queries product database
+Similarities are checked against the product database (REQ-3).
+Display Results
+Show results with product details in an intuitive format (REQ-4).
+User interacts with results
+Users can download or share generated images (REQ-7).
+User can give feedback or return to upload another image

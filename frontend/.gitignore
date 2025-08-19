@@ -1,0 +1,27 @@
+# Virtual environments
+venv/
+tf-env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node modules (frontend)
+frontend/node_modules/
+
+# Large data / generated files
+uploads/
+*.npy
+*.jpg
+*.png
+*.pdf
+
+# Env files
+*.env
+Key.env
+
+# System files
+.DS_Store
+Thumbs.db

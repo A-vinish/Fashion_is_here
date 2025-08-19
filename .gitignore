@@ -1,0 +1,17 @@
+# Ignore virtual environments
+venv/
+tf-env/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore uploads and large data
+uploads/
+*.npy
+*.jpg
+*.pdf
+
+# Ignore environment files
+*.env
+uploads/
