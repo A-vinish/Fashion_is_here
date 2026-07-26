@@ -1,180 +1,349 @@
-//changes 1- Grok API  2- Path for dataset
+# 👗 StyleGPT – Conversational AI Fashion Search
 
-//to run  1-  cd A:\GENAI\stylegpt\frontend
-              npm run dev
+StyleGPT is an AI-powered fashion search platform that combines **computer vision**, **vector search**, and **natural language understanding** to help users discover visually similar fashion products and refine results through conversation.
 
-          2-  cd A:\GENAI\stylegpt\backend
-              venv\Scripts\activate
-              python app.py
+Instead of relying only on image similarity, users can upload an image and continue refining the search with prompts such as:
 
-# StyleGPT — Conversational Multimodal Fashion Search
+> "Show me something similar in blue for a wedding under ₹3000."
 
-A v2 upgrade of a visual fashion search platform: instead of only
-"upload an image, get similar images," you can now **chat** to refine
-results — "show me something like this but in blue, for a wedding,
-under ₹3000" — and the app remembers your constraints across the
-conversation.
+The application maintains conversational context and combines image embeddings with structured metadata filters to deliver more relevant recommendations.
 
-Built entirely with **free, open-source tools**. No paid API required.
+---
 
-## How it works
+## ✨ Features
 
-```
-User uploads image
+- 📷 Search fashion products using an uploaded image
+- 💬 Conversational refinement of search results
+- 🎨 Filter by color, occasion, category, gender, and price
+- 🧠 CLIP-based visual similarity search
+- 🔍 Vector search powered by ChromaDB
+- 🤖 Natural language filter extraction using LangChain + Groq LLM
+- 🏷 Automatic metadata tagging using zero-shot classification
+- ⚡ Fast React frontend with Vite
+- 🐍 Flask backend with REST APIs
+- 📦 Resumable dataset indexing for large image collections
+
+---
+
+# Demo Workflow
+
+```text
+Upload Image
       │
       ▼
- OpenCLIP embeds the image ──────► ChromaDB (vector search) ──► results
-      │
-User types a refinement ("but in blue, for a wedding")
+Generate CLIP Embedding
       │
       ▼
-LangChain + free LLM (Groq/Ollama) extracts structured filters
-      │  {"color": "blue", "occasion": "wedding"}
+Search Similar Images (ChromaDB)
+      │
       ▼
-Filters merged into session memory + re-run vector search ──► refined results
+Display Initial Results
+      │
+      ▼
+User Refines Search
+("Blue for a wedding under ₹3000")
+      │
+      ▼
+LangChain + Groq
+Extract Structured Filters
+      │
+      ▼
+Combine Filters + Vector Search
+      │
+      ▼
+Updated Personalized Results
 ```
 
-This is a **hybrid retrieval** system: CLIP handles "what does it look
-like," the LLM handles "what did the user just say in plain English,"
-and ChromaDB combines both (visual similarity + metadata filters) in
-one query.
+---
 
-## Project structure
+# Tech Stack
 
-```
-stylegpt/
-├── backend/
-│   ├── app.py               # Flask API (upload, search, chat, image routes)
-│   ├── embeddings.py         # OpenCLIP image/text embedding
-│   ├── vectorstore.py        # ChromaDB storage + search
-│   ├── filter_parser.py      # LangChain: text -> structured filters
-│   ├── auto_tag.py           # CLIP zero-shot auto-tagging (for unlabeled datasets)
-│   ├── bulk_seed_from_folder.py  # Resumable bulk seeder for large datasets
-│   ├── seed_data.py          # Small-scale seeder (CSV + few images)
+## Frontend
+
+- React.js
+- Vite
+- CSS3
+- JavaScript (ES6+)
+
+## Backend
+
+- Python
+- Flask
+- LangChain
+- OpenCLIP
+- ChromaDB
+
+## AI & Machine Learning
+
+- OpenCLIP
+- Vector Embeddings
+- Zero-shot Image Classification
+- Semantic Search
+
+## LLM
+
+- Groq API
+- Llama 3 (via Groq)
+
+---
+
+# Project Structure
+
+```text
+stylegpt
+│
+├── backend
+│   ├── app.py
+│   ├── embeddings.py
+│   ├── vectorstore.py
+│   ├── filter_parser.py
+│   ├── auto_tag.py
+│   ├── bulk_seed_from_folder.py
+│   ├── seed_data.py
 │   ├── requirements.txt
 │   └── .env.example
-└── frontend/                  # React + Vite (matches your React/Node.js stack)
-    ├── src/
-    │   ├── App.jsx            # Main component - state, chat, search
-    │   ├── api.js             # Centralized fetch calls to the backend
-    │   ├── index.css          # Design system (boutique/editorial theme)
-    │   └── components/
-    │       ├── ChatMessage.jsx
-    │       ├── FilterPills.jsx   # swing-tag styled filter chips
-    │       └── ResultsGrid.jsx
-    ├── index.html
-    ├── vite.config.js
-    └── package.json
+│
+├── frontend
+│   ├── src
+│   │   ├── components
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   └── index.css
+│   │
+│   ├── package.json
+│   ├── vite.config.js
+│   └── index.html
+│
+└── README.md
 ```
 
-## Full Setup Guide (from absolute zero, all free)
+---
 
-### Step 0 — Check you have Python
-Open a terminal (Command Prompt / PowerShell on Windows, Terminal on Mac/Linux) and run:
+# Installation
+
+## 1. Clone Repository
+
 ```bash
-python --version
-```
-You need Python 3.10 or higher. If this fails, install Python from
-https://www.python.org/downloads/ (tick "Add Python to PATH" during install on Windows),
-then close and reopen your terminal.
+git clone https://github.com/yourusername/stylegpt.git
 
-### Step 1 — Get the project files
-Unzip `stylegpt.zip` anywhere on your computer (e.g. Desktop), then in your terminal:
+cd stylegpt
+```
+
+---
+
+## 2. Backend Setup
+
+Navigate to backend
+
 ```bash
-cd path/to/stylegpt/backend
+cd backend
 ```
-(Replace `path/to/` with wherever you unzipped it — e.g. `cd Desktop/stylegpt/backend`)
 
-### Step 2 — Create a virtual environment (keeps this project's packages isolated)
+Create virtual environment
+
 ```bash
 python -m venv venv
 ```
-Activate it:
-- **Windows:** `venv\Scripts\activate`
-- **Mac/Linux:** `source venv/bin/activate`
 
-You'll know it worked if you see `(venv)` at the start of your terminal line.
-You need to run this activate command every time you open a new terminal for this project.
+Activate environment
 
-### Step 3 — Install all dependencies
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
-This takes a few minutes the first time (downloads torch, chromadb, langchain, etc. — all free).
 
-### Step 4 — Choose a free LLM provider
-You need ONE of these two so the chat/refinement feature works:
+---
 
-**Option A — Groq (recommended: easiest, no install, generous free tier)**
-1. Go to https://console.groq.com and sign up (no credit card needed)
-2. Click "API Keys" → "Create API Key" → copy it
-3. In the `backend` folder, copy `.env.example` to a new file named `.env`
-4. Open `.env` in any text editor and paste your key:
-   `GROQ_API_KEY=gsk_your_actual_key_here`
-5. Save. Done — the code auto-detects this.
+## 3. Configure Environment Variables
 
-**Option B — Ollama (fully offline, zero API key, needs ~5GB free disk)**
-1. Download and install from https://ollama.com
-2. In a terminal run: `ollama pull llama3.1`
-3. Leave `.env` empty/don't create it — the code falls back to Ollama automatically.
+Create a `.env` file inside the backend folder.
 
-### Step 5 — Start the backend server
-Still inside `backend/` with `(venv)` active:
+Example:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+```
+
+---
+
+## 4. Index Dataset
+
+Update the dataset path inside
+
+```
+bulk_seed_from_folder.py
+```
+
+Run
+
+```bash
+python bulk_seed_from_folder.py
+```
+
+This creates CLIP embeddings and stores them inside ChromaDB.
+
+---
+
+## 5. Start Backend
+
 ```bash
 python app.py
 ```
-The first time you run this, it downloads the CLIP model (~600MB, one-time, free) —
-this can take a few minutes depending on your internet. You'll see:
-`* Running on http://127.0.0.1:5000`
-Leave this terminal window open and running.
 
-### Step 6 — Add sample fashion images to search
-Open a **new** terminal window (keep the server running in the first one):
-```bash
-cd path/to/stylegpt/backend
-venv\Scripts\activate        # Windows (or: source venv/bin/activate on Mac/Linux)
-```
-1. Put a few fashion images (any .jpg/.png — reuse images from your v1 project)
-   into the `backend/sample_images/` folder
-2. Open `sample_items.csv` in Excel/Notepad and edit the filenames/colors/prices
-   to match your actual images (a template with example rows is already there)
-3. Run the seeding script:
-```bash
-python seed_data.py
-```
-You should see `[ok] saree1.jpg -> <some-id>` for each image.
+Backend runs at
 
-### Step 7 — Run the React frontend
-Open a **new** terminal window (keep the backend running in the first one):
 ```
-cd path/to/stylegpt/frontend
+http://127.0.0.1:5000
+```
+
+---
+
+## 6. Frontend Setup
+
+Open another terminal.
+
+```bash
+cd frontend
+
 npm install
+```
+
+Start development server
+
+```bash
 npm run dev
 ```
-This starts a dev server (Vite) - open the URL it prints, usually
+
+Frontend runs at
+
+```
 http://localhost:5173
+```
 
-Try:
-- Upload an image → click "Search by Image"
-- Type in the chat box: "show me something in blue for a wedding under 3000"
+---
 
-### Troubleshooting
-- **"Can't reach the backend"** → make sure `python app.py` is still running in its terminal
-- **CORS errors in browser console** → make sure you're opening `index.html` directly
-  and that `app.py` is running
-- **Groq errors about invalid key** → double check `.env` has no extra spaces/quotes around the key
-- **Very slow first request** → normal, CLIP model is loading into memory the first time
+# How to Use
 
-## What makes this resume-worthy
+### Image Search
 
-- **Hybrid retrieval**: combines dense vector search (CLIP) with structured
-  metadata filters extracted by an LLM — a real-world RAG pattern, not a toy demo.
-- **Multi-turn memory**: filters persist and merge across a conversation
-  (see `SESSIONS` dict in `app.py` and the merge test in `filter_parser.py`).
-- **Zero-cost stack**: every component (CLIP, ChromaDB, LangChain, Groq free
-  tier / Ollama) is free — a deliberate design choice worth mentioning in interviews.
+1. Upload a fashion image
+2. Click **Search by Image**
+3. Browse visually similar products
 
-## Possible next steps
-- Swap the in-memory `SESSIONS` dict for Redis for real persistence
-- Add a re-ranking step so text and image similarity are properly weighted
-- Deploy backend on Render/Railway free tier, frontend on Vercel/GitHub Pages
+---
+
+### Conversational Search
+
+After image search, continue refining results naturally.
+
+Example prompts
+
+```
+Show me something in blue.
+
+Under ₹2500.
+
+For a wedding.
+
+More casual.
+
+Show only sneakers.
+
+Something similar but black.
+```
+
+---
+
+# AI Pipeline
+
+```
+Image Upload
+      │
+      ▼
+OpenCLIP Embedding
+      │
+      ▼
+ChromaDB Similarity Search
+      │
+      ▼
+Top Matching Products
+      │
+      ▼
+User Query
+      │
+      ▼
+LangChain
+      │
+      ▼
+Groq LLM
+      │
+      ▼
+Structured Filters
+      │
+      ▼
+Filtered Vector Search
+      │
+      ▼
+Updated Recommendations
+```
+
+---
+
+# APIs
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/upload` | POST | Upload image |
+| `/search` | POST | Search similar products |
+| `/chat` | POST | Refine search using natural language |
+| `/image/<id>` | GET | Retrieve stored image |
+
+---
+
+# Future Improvements
+
+- User authentication
+- Wishlist support
+- Shopping cart
+- Brand filtering
+- Voice search
+- Fashion recommendation history
+- Dark mode
+- Mobile application
+- Multi-image search
+- Real-time product catalog integration
+
+---
+
+# Author
+
+**Avinish Kumar Mahato**
+
+Software Engineering Student
+
+Interested in
+
+- Artificial Intelligence
+- Machine Learning
+- Computer Vision
+- Full Stack Development
+- Generative AI
+
+---
+
+# License
+
+This project is developed for learning and portfolio purposes.
