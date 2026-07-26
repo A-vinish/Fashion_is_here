@@ -1,0 +1,4 @@
+Put your fashion images here (e.g. saree1.jpg, kurta1.jpg, dress1.jpg)
+matching the filenames listed in sample_items.csv, then run seed_data.py.
+
+You can reuse the same images from your v1 Fashion Visual Search project.

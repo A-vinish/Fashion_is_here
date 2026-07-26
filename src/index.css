@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-ink font-body antialiased;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-secondary/30 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-secondary/60; }
+}
+
+@layer components {
+  .gradient-text {
+    @apply text-primary;
+  }
+  .gradient-btn {
+    @apply bg-gradient-to-r from-primary to-secondary text-white font-button font-medium
+           rounded-full px-6 py-3 shadow-glow transition-transform duration-200
+           hover:scale-[1.03] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100;
+  }
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-md border border-white/50 shadow-card rounded-3xl;
+  }
+  .pill-badge {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium;
+  }
+}
+
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}

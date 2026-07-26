@@ -1,8 +1,23 @@
+# Core web framework
 flask
 flask-cors
+
+# CLIP embeddings (free, open-source, runs on CPU)
+torch
+torchvision
+open_clip_torch
+
+# Vector database (free, local, no server needed)
+chromadb
+
+# LangChain (free, open-source orchestration)
+langchain
+langchain-community
+
+# Pick ONE of these free LLM providers (see README for setup):
+langchain-groq          # free tier, cloud-hosted, fast — recommended for laptops
+langchain-ollama        # fully local, zero cost, needs Ollama installed
+
 python-dotenv
-tensorflow
-faiss-cpu
+Pillow
 requests
-numpy
-opencv-python
